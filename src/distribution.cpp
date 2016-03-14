@@ -36,4 +36,14 @@ namespace inform
         sample_size += delta;
         return occurrence;
     }
+
+    auto distribution::at(uint64_t event) const -> double
+    {
+        return static_cast<double>(hist.at(event)) / sample_size;
+    }
+
+    auto distribution::operator[](uint64_t event) const -> double
+    {
+        return static_cast<double>(hist[event]) / sample_size;
+    }
 }

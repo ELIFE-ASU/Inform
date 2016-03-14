@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 #include <gtest/gtest.h>
 
+#include <cmath>
 #include <inform/distribution.h>
 
 TEST(Distribution, SampleSizeConstructor)
@@ -54,4 +55,56 @@ TEST(Distribution, Set)
 
     ASSERT_THROW(dist.set(-1,5), std::out_of_range);
     ASSERT_THROW(dist.set(dist.size(),5), std::out_of_range);
+}
+
+TEST(Distribution, At)
+{
+    auto dist = inform::distribution(2);
+    ASSERT_TRUE(std::isnan(dist.at(0)));
+    ASSERT_TRUE(std::isnan(dist.at(1)));
+
+    dist.tic(0);
+    ASSERT_DOUBLE_EQ(1.0, dist.at(0));
+    ASSERT_DOUBLE_EQ(0.0, dist.at(1));
+
+    dist.tic(1);
+    ASSERT_DOUBLE_EQ(0.5, dist.at(0));
+    ASSERT_DOUBLE_EQ(0.5, dist.at(1));
+
+    dist.tic(1);
+    ASSERT_DOUBLE_EQ(1.0/3.0, dist.at(0));
+    ASSERT_DOUBLE_EQ(2.0/3.0, dist.at(1));
+
+    dist.set(0,4);
+    dist.set(1,2);
+    ASSERT_DOUBLE_EQ(2.0/3.0, dist.at(0));
+    ASSERT_DOUBLE_EQ(1.0/3.0, dist.at(1));
+
+    ASSERT_THROW(dist.at(-1), std::out_of_range);
+    ASSERT_THROW(dist.at(dist.size()), std::out_of_range);
+}
+
+
+TEST(Distribution, IndexOperator)
+{
+    auto dist = inform::distribution(2);
+    ASSERT_TRUE(std::isnan(dist[0]));
+    ASSERT_TRUE(std::isnan(dist[1]));
+
+    dist.tic(0);
+    ASSERT_DOUBLE_EQ(1.0, dist[0]);
+    ASSERT_DOUBLE_EQ(0.0, dist[1]);
+
+    dist.tic(1);
+    ASSERT_DOUBLE_EQ(0.5, dist[0]);
+    ASSERT_DOUBLE_EQ(0.5, dist[1]);
+
+    dist.tic(1);
+    ASSERT_DOUBLE_EQ(1.0/3.0, dist[0]);
+    ASSERT_DOUBLE_EQ(2.0/3.0, dist[1]);
+
+    dist.set(0,4);
+    dist.set(1,2);
+    ASSERT_DOUBLE_EQ(2.0/3.0, dist[0]);
+    ASSERT_DOUBLE_EQ(1.0/3.0, dist[1]);
 }

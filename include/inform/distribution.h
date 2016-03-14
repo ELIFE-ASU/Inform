@@ -26,7 +26,10 @@ namespace inform
             auto count() const -> uint64_t;
 
             auto tic(uint64_t event, uint64_t n = 1) -> uint64_t;
-            auto set(uint64_t event, uint64_t occurance) -> uint64_t;
+            auto set(uint64_t event, uint64_t occurrence) -> uint64_t;
+
+            auto at(uint64_t event) const -> double;
+            auto operator[](uint64_t event) const -> double;
 
         private:
             histogram hist;
