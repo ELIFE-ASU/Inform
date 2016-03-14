@@ -37,6 +37,11 @@ namespace inform
         return occurrence;
     }
 
+    auto distribution::get(uint64_t event) const -> uint64_t
+    {
+        return hist.at(event);
+    }
+
     auto distribution::at(uint64_t event) const -> double
     {
         return static_cast<double>(hist.at(event)) / sample_size;

@@ -57,6 +57,22 @@ TEST(Distribution, Set)
     ASSERT_THROW(dist.set(dist.size(),5), std::out_of_range);
 }
 
+TEST(Distribution, Get)
+{
+    auto dist = inform::distribution(2);
+    ASSERT_FALSE(dist.is_valid());
+    ASSERT_EQ(uint64_t{0}, dist.get(0));
+    ASSERT_EQ(uint64_t{0}, dist.get(1));
+
+    dist.set(0,5);
+    dist.set(1,2);
+    ASSERT_EQ(uint64_t{5}, dist.get(0));
+    ASSERT_EQ(uint64_t{2}, dist.get(1));
+
+    ASSERT_THROW(dist.set(-1,5), std::out_of_range);
+    ASSERT_THROW(dist.set(dist.size(),5), std::out_of_range);
+}
+
 TEST(Distribution, At)
 {
     auto dist = inform::distribution(2);
