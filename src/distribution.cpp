@@ -27,6 +27,16 @@ namespace inform
         sample_size = std::accumulate(std::begin(hist), std::end(hist), 0);
     }
 
+    distribution::distribution(std::vector<uint64_t> const& v) : hist{v}
+    {
+        if (hist.size() == 0)
+        {
+            auto msg = "inform::distribution: cannot have size 0";
+            throw std::invalid_argument(msg);
+        }
+        sample_size = std::accumulate(std::begin(hist), std::end(hist), 0);
+    }
+
     auto distribution::is_valid() const -> bool
     {
         return count() != 0 && size() != 0;

@@ -26,6 +26,17 @@ TEST(Distribution, InitializerList)
     ASSERT_THROW(inform::distribution({}), std::invalid_argument);
 }
 
+TEST(Distribution, Vector)
+{
+    std::vector<uint64_t> const v = {1,2,3};
+    auto dist = inform::distribution{v};
+    ASSERT_TRUE(dist.is_valid());
+    ASSERT_EQ(size_t{3}, dist.size());
+    ASSERT_EQ(uint64_t{6}, dist.count());
+
+    ASSERT_THROW(inform::distribution(std::vector<uint64_t>{}), std::invalid_argument);
+}
+
 TEST(Distribution, Tic)
 {
     auto dist = inform::distribution(2);
