@@ -1,4 +1,4 @@
-// Copyright 2016 ELIFE. All rights reserved.
+  // Copyright 2016 ELIFE. All rights reserved.
 // Use of this source code is governed by a MIT
 // license that can be found in the LICENSE file.
 #include <gtest/gtest.h>
@@ -125,4 +125,19 @@ TEST(Distribution, IndexOperator)
     dist.set(1,2);
     ASSERT_DOUBLE_EQ(2.0/3.0, dist[0]);
     ASSERT_DOUBLE_EQ(1.0/3.0, dist[1]);
+}
+
+TEST(Distribution, Iterator)
+{
+    auto dist = inform::distribution(5);
+    for (size_t i = 0; i < dist.size(); ++i)
+    {
+        dist.set(i,i+1);
+    }
+    auto index = 0;
+    for (auto const& p : dist)
+    {
+        ASSERT_EQ(dist.at(index), p);
+        ++index;
+    }
 }

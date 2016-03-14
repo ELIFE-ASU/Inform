@@ -4,15 +4,26 @@
 #pragma once
 
 #include <cstdint>
+#include <iterator>
 #include <vector>
 
 namespace inform
 {
+    class distribution_iterator;
+
     class distribution
     {
-        using histogram = std::vector<uint64_t>;
+        private:
+            friend class distribution_iterator;
+
+            using histogram = std::vector<uint64_t>;
+
+            histogram hist;
+            uint64_t sample_size;
 
         public:
+            using iterator = distribution_iterator;
+
             distribution() = delete;
             distribution(size_t n);
             distribution(distribution const&) = default;
@@ -32,8 +43,33 @@ namespace inform
             auto at(uint64_t event) const -> double;
             auto operator[](uint64_t event) const -> double;
 
+            auto begin() const -> iterator;
+            auto end() const -> iterator;
+    };
+
+    class distribution_iterator : public std::iterator<std::input_iterator_tag, double>
+    {
         private:
-            histogram hist;
-            uint64_t sample_size;
+            friend class distribution;
+
+            distribution const& dist;
+            distribution::histogram::const_iterator it;
+
+            distribution_iterator(distribution const& dist, distribution::histogram::const_iterator it);
+
+        public:
+            distribution_iterator() = delete;
+            distribution_iterator(distribution_iterator const&) = default;
+            distribution_iterator(distribution_iterator&&) = default;
+
+            auto operator=(distribution_iterator const&) -> distribution_iterator& = default;
+            auto operator=(distribution_iterator&&) -> distribution_iterator& = default;
+
+            auto operator==(distribution_iterator const& other) const -> bool;
+            auto operator!=(distribution_iterator const& other) const -> bool;
+
+            auto operator++() -> distribution_iterator&;
+            auto operator++(int) -> distribution_iterator;
+            auto operator*() const -> double;
     };
 }

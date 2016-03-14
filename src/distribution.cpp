@@ -60,4 +60,14 @@ namespace inform
     {
         return static_cast<double>(hist[event]) / sample_size;
     }
+
+    auto distribution::begin() const -> iterator
+    {
+        return {*this, std::begin(hist)};
+    }
+
+    auto distribution::end() const -> iterator
+    {
+        return {*this, std::end(hist)};
+    }
 }
