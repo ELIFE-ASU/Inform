@@ -3,9 +3,18 @@
 // license that can be found in the LICENSE file.
 #include <inform/distribution.h>
 
+#include <string>
+
 namespace inform
 {
-    distribution::distribution(size_t n) : hist(n,0), sample_size{0} {}
+    distribution::distribution(size_t n) : hist(n,0), sample_size{0}
+    {
+        if (n == 0)
+        {
+            auto msg = "inform::distribution: cannot have size 0";
+            throw std::invalid_argument(msg);
+        }
+    }
 
     auto distribution::is_valid() const -> bool
     {

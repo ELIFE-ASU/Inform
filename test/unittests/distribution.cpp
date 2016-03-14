@@ -12,6 +12,8 @@ TEST(Distribution, SampleSizeConstructor)
     ASSERT_FALSE(dist.is_valid());
     ASSERT_EQ(size_t{5}, dist.size());
     ASSERT_EQ(uint64_t{0}, dist.count());
+
+    ASSERT_THROW(inform::distribution(0), std::invalid_argument);
 }
 
 TEST(Distribution, Tic)
