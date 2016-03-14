@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 #include <inform/distribution.h>
 
+#include <numeric>
 #include <string>
 
 namespace inform
@@ -14,6 +15,16 @@ namespace inform
             auto msg = "inform::distribution: cannot have size 0";
             throw std::invalid_argument(msg);
         }
+    }
+
+    distribution::distribution(std::initializer_list<uint64_t>&& l) : hist{l}
+    {
+        if (hist.size() == 0)
+        {
+            auto msg = "inform::distribution: cannot have size 0";
+            throw std::invalid_argument(msg);
+        }
+        sample_size = std::accumulate(std::begin(hist), std::end(hist), 0);
     }
 
     auto distribution::is_valid() const -> bool

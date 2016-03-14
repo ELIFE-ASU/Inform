@@ -26,6 +26,7 @@ namespace inform
 
             distribution() = delete;
             distribution(size_t n);
+            distribution(std::initializer_list<uint64_t>&& l);
             distribution(distribution const&) = default;
             distribution(distribution&&) = default;
 
