@@ -14,7 +14,7 @@ namespace inform
 
         public:
             distribution() = delete;
-            distribution(size_t);
+            distribution(size_t n);
             distribution(distribution const&) = default;
             distribution(distribution&&) = default;
 
@@ -24,6 +24,8 @@ namespace inform
             auto is_valid() const -> bool;
             auto size() const -> std::size_t;
             auto count() const -> uint64_t;
+
+            auto tic(uint64_t event, uint64_t n = 1) -> uint64_t;
 
         private:
             histogram hist;

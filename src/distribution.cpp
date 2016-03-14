@@ -5,7 +5,7 @@
 
 namespace inform
 {
-    distribution::distribution(size_t n) : hist(n), sample_size{0} {}
+    distribution::distribution(size_t n) : hist(n,0), sample_size{0} {}
 
     auto distribution::is_valid() const -> bool
     {
@@ -20,5 +20,12 @@ namespace inform
     auto distribution::count() const -> uint64_t
     {
         return sample_size;
+    }
+
+    auto distribution::tic(uint64_t event, uint64_t n) -> uint64_t
+    {
+        auto const x = (hist.at(event) += n);
+        sample_size += n;
+        return x;
     }
 }
