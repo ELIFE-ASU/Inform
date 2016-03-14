@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <iterator>
+#include <numeric>
 #include <vector>
 
 namespace inform
@@ -26,8 +27,9 @@ namespace inform
 
             distribution() = delete;
             distribution(size_t n);
-            distribution(std::vector<uint64_t> const& v);
             distribution(std::initializer_list<uint64_t>&& l);
+            distribution(std::vector<uint64_t> const& v);
+            template <typename Iter> distribution(Iter first, Iter last);
             distribution(distribution const&) = default;
             distribution(distribution&&) = default;
 
@@ -48,6 +50,17 @@ namespace inform
             auto begin() const -> iterator;
             auto end() const -> iterator;
     };
+
+    template <typename Iter>
+    distribution::distribution(Iter first, Iter last) : hist{first,last}
+    {
+        if (hist.size() == 0)
+        {
+            auto msg = "inform::distribution: cannot have size 0";
+            throw std::invalid_argument(msg);
+        }
+        sample_size = std::accumulate(std::begin(hist), std::end(hist), 0);
+    }
 
     class distribution_iterator : public std::iterator<std::input_iterator_tag, double>
     {

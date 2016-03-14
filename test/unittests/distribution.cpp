@@ -16,7 +16,7 @@ TEST(Distribution, SampleSizeConstructor)
     ASSERT_THROW(inform::distribution(0), std::invalid_argument);
 }
 
-TEST(Distribution, InitializerList)
+TEST(Distribution, InitializerListConstructor)
 {
     auto dist = inform::distribution{1,2,3};
     ASSERT_TRUE(dist.is_valid());
@@ -26,7 +26,7 @@ TEST(Distribution, InitializerList)
     ASSERT_THROW(inform::distribution({}), std::invalid_argument);
 }
 
-TEST(Distribution, Vector)
+TEST(Distribution, VectorConstructor)
 {
     std::vector<uint64_t> const v = {1,2,3};
     auto dist = inform::distribution{v};
@@ -35,6 +35,17 @@ TEST(Distribution, Vector)
     ASSERT_EQ(uint64_t{6}, dist.count());
 
     ASSERT_THROW(inform::distribution(std::vector<uint64_t>{}), std::invalid_argument);
+}
+
+TEST(Distribution, IteratorConstructor)
+{
+    std::vector<uint64_t> const v = {1,2,3};
+    auto dist = inform::distribution{v.begin(), v.end()};
+    ASSERT_TRUE(dist.is_valid());
+    ASSERT_EQ(size_t{3}, dist.size());
+    ASSERT_EQ(uint64_t{6}, dist.count());
+
+    ASSERT_THROW(inform::distribution(v.begin(), v.begin()), std::invalid_argument);
 }
 
 TEST(Distribution, Tic)
