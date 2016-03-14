@@ -28,4 +28,12 @@ namespace inform
         sample_size += n;
         return x;
     }
+
+    auto distribution::set(uint64_t event, uint64_t occurrence) -> uint64_t
+    {
+        auto const delta = occurrence - hist.at(event);
+        hist.at(event) = occurrence;
+        sample_size += delta;
+        return occurrence;
+    }
 }

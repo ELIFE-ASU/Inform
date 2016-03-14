@@ -31,3 +31,27 @@ TEST(Distribution, Tic)
     ASSERT_THROW(dist.tic(-1), std::out_of_range);
     ASSERT_THROW(dist.tic(dist.size()), std::out_of_range);
 }
+
+TEST(Distribution, Set)
+{
+    auto dist = inform::distribution(2);
+    ASSERT_FALSE(dist.is_valid());
+
+    ASSERT_EQ(uint64_t{2}, dist.set(0,2));
+    ASSERT_EQ(uint64_t{2}, dist.count());
+    ASSERT_TRUE(dist.is_valid());
+
+    ASSERT_EQ(uint64_t{0}, dist.set(0,0));
+    ASSERT_EQ(uint64_t{0}, dist.count());
+    ASSERT_FALSE(dist.is_valid());
+
+    ASSERT_EQ(uint64_t{4}, dist.set(0,4));
+    ASSERT_EQ(uint64_t{2}, dist.set(1,2));
+    ASSERT_EQ(uint64_t{6}, dist.count());
+    ASSERT_EQ(uint64_t{0}, dist.set(0,0));
+    ASSERT_EQ(uint64_t{2}, dist.count());
+    ASSERT_TRUE(dist.is_valid());
+
+    ASSERT_THROW(dist.set(-1,5), std::out_of_range);
+    ASSERT_THROW(dist.set(dist.size(),5), std::out_of_range);
+}
