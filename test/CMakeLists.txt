@@ -3,6 +3,7 @@ add_subdirectory(unittests)
 
 add_executable(${PROJECT_NAME}_unittest ${${PROJECT_NAME}_unittest_SOURCES})
 target_link_libraries(${PROJECT_NAME}_unittest gtest gtest_main)
+target_link_libraries(${PROJECT_NAME}_unittest ${PROJECT_NAME})
 
 foreach(unittest_SOURCE ${${PROJECT_NAME}_unittest_SOURCES})
     file(STRINGS ${unittest_SOURCE} TEST_NAMES REGEX ^TEST)

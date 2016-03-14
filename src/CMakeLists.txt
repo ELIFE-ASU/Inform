@@ -1,0 +1,3 @@
+set(${PROJECT_NAME}_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/distribution.cpp
+    PARENT_SCOPE)
