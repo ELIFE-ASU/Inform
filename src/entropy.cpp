@@ -7,16 +7,11 @@
 
 namespace inform
 {
-    auto shannon_entropy(distribution const& pdf, double base) -> double
+    auto shannon_entropy(distribution const& pdf) -> double
     {
         if (!pdf.is_valid())
         {
             auto msg = "inform::shannon_entropy: provided distribution is invalid";
-            throw std::invalid_argument(msg);
-        }
-        if (base <= 1)
-        {
-            auto msg = "inform::shannon_entropy: provided base must be greater than 1";
             throw std::invalid_argument(msg);
         }
         auto h = 0.0;
@@ -24,9 +19,9 @@ namespace inform
         {
             if (p != 0.0)
             {
-                h -= p * std::log(p);
+                h -= p * std::log2(p);
             }
         }
-        return h / std::log(base);
+        return h;
     }
 }

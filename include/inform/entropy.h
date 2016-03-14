@@ -7,5 +7,5 @@
 
 namespace inform
 {
-    auto shannon_entropy(distribution const& pdf, double base = 2.0) -> double;
+    auto shannon_entropy(distribution const& pdf) -> double;
 }
