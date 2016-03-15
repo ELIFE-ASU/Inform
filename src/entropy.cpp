@@ -58,7 +58,7 @@ namespace inform
         }
         if (index == 1.0)
         {
-            return shannon_entropy(pdf);
+            return shannon_entropy(pdf) / std::log2(std::exp(1));
         }
         auto h = 1.0;
         for (auto const& p : pdf)
