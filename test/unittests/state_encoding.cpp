@@ -47,3 +47,21 @@ TEST(EncodeState, StateTooLong)
     ASSERT_NO_THROW(encode_state(std::vector<bool>(64)));
     ASSERT_THROW(encode_state(std::vector<bool>(65)), std::invalid_argument);
 }
+
+TEST(DecodeState, ReverseEncoding)
+{
+    using namespace inform;
+    auto const M = 10;
+    for (uint64_t i = 0; i < (1 << M); ++i)
+    {
+        ASSERT_EQ(i, encode_state(decode_state<>(i, M)));
+    }
+}
+
+TEST(DecodeState, TooLong)
+{
+    using namespace std::placeholders;
+    using namespace inform;
+    ASSERT_NO_THROW(decode_state<>(~uint64_t{0}, 64));
+    ASSERT_THROW(decode_state<>(~uint64_t{0}, 65), std::invalid_argument);
+}

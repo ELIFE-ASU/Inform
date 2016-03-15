@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <type_traits>
+#include <vector>
 
 namespace inform
 {
@@ -40,5 +41,42 @@ namespace inform
     auto encode_state(Container state) -> uint64_t
     {
         return encode_state(std::begin(state), std::end(state));
+    }
+
+    template <typename Iter>
+    auto decode_state(uint64_t encoding, uint64_t length, Iter first) -> Iter
+    {
+        static decltype(length) const max_size = 8 * sizeof(encoding);
+        if (length > max_size)
+        {
+            auto msg = "inform::decode_state: decoded state length cannot exceed " + std::to_string(max_size);
+            throw std::invalid_argument(msg);
+        }
+
+        for(; length > 0; --length, ++first, encoding >>= 1)
+        {
+            *first = encoding & 1;
+        }
+        return first;
+    }
+
+    template <typename Container = std::vector<bool>>
+    auto decode_state(uint64_t encoding, uint64_t length) -> Container;
+
+    template <typename Container>
+    auto decode_state(uint64_t encoding, uint64_t length) -> Container
+    {
+        Container xs;
+        decode_state(encoding, length, std::back_inserter(xs));
+        return xs;
+    }
+
+    template <>
+    auto decode_state<std::vector<bool>>(uint64_t encoding, uint64_t length) -> std::vector<bool>
+    {
+        std::vector<bool> xs;
+        xs.reserve(length);
+        decode_state(encoding, length, std::back_inserter(xs));
+        return xs;
     }
 }
