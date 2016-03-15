@@ -191,3 +191,44 @@ TEST(ConditionalEntropy, NonUniform)
     distribution const condition = {2,1,1,1};
     ASSERT_NEAR(1.732600, conditional_entropy(joint, condition), 1e-6);
 }
+
+TEST(MutualInformation, Independent)
+{
+    using namespace inform;
+
+    distribution const condition_x = {5,2,3,5,1,4,6,2,1,4,2,4};
+    distribution const condition_y = {2,4,5,2,7,3,9,8,8,7,2,3};
+    distribution joint(condition_x.size() * condition_y.size());
+    for (size_t i = 0; i < condition_x.size(); ++i)
+    {
+        for (size_t j = 0; j < condition_y.size(); ++j)
+        {
+            joint.set(j + i * condition_y.size(), condition_x.get(i) * condition_y.get(j));
+        }
+    }
+    EXPECT_TRUE(joint.is_valid());
+    EXPECT_EQ(condition_x.size() * condition_y.size(), joint.size());
+    EXPECT_EQ(condition_x.count() * condition_y.count(), joint.count());
+
+    ASSERT_NEAR(0.0, mutual_information(joint, condition_x, condition_y), 1e-6);
+}
+
+TEST(MutualInformation, Dependent)
+{
+    using namespace inform;
+
+    distribution const condition_x = {80,20};
+    distribution const condition_y = {25,75};
+    distribution const joint = {10,70,15,5};
+
+    auto h = 0.0;
+    for (size_t i = 0; i < condition_x.size(); ++i)
+    {
+        for (size_t j = 0; j < condition_y.size(); ++j)
+        {
+            auto const p = joint.at(j + i * condition_y.size());
+            h += p * std::log2(p / (condition_x.at(i) * condition_y.at(j)));
+        }
+    }
+    ASSERT_EQ(h, mutual_information(joint, condition_x, condition_y));
+}

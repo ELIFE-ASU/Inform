@@ -72,4 +72,11 @@ namespace inform
     {
         return shannon_entropy(joint) - shannon_entropy(condition);
     }
+
+    auto mutual_information(distribution const& joint,
+                            distribution const& condition_x,
+                            distribution const& condition_y) -> double
+    {
+        return shannon_entropy(condition_x) + shannon_entropy(condition_y) - shannon_entropy(joint);
+    }
 }

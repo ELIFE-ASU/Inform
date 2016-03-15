@@ -14,4 +14,8 @@ namespace inform
 
     auto conditional_entropy(distribution const& joint,
                              distribution const& condition) -> double;
+
+    auto mutual_information(distribution const& joint,
+                            distribution const& condition_x,
+                            distribution const& condition_y) -> double;
 }
