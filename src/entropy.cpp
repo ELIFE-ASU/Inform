@@ -67,4 +67,9 @@ namespace inform
         }
         return h / (index - 1);
     }
+
+    auto conditional_entropy(distribution const& joint, distribution const& condition) -> double
+    {
+        return shannon_entropy(joint) - shannon_entropy(condition);
+    }
 }

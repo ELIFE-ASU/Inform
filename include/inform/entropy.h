@@ -5,9 +5,13 @@
 
 #include <inform/distribution.h>
 
+
 namespace inform
 {
     auto shannon_entropy(distribution const& pdf) -> double;
     auto renyi_entropy(distribution const& pdf, double order) -> double;
     auto tsallis_entropy(distribution const& pdf, double index) -> double;
+
+    auto conditional_entropy(distribution const& joint,
+                             distribution const& condition) -> double;
 }

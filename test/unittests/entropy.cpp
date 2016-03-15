@@ -159,3 +159,35 @@ TEST(TsallisEntropy, NonUniform)
     ASSERT_DOUBLE_EQ(0.8091857105461353, tsallis_entropy(distribution{2,2,1},  1.5));
     ASSERT_DOUBLE_EQ(0.6399999999999999, tsallis_entropy(distribution{2,2,1},  2.0));
 }
+
+TEST(ConditionalEntropy, SelfCondition)
+{
+    using namespace inform;
+
+    auto const uniform = distribution{1,1,1,1,1};
+    ASSERT_DOUBLE_EQ(0.0, conditional_entropy(uniform, uniform));
+
+    auto const delta = distribution{0,1,0};
+    ASSERT_DOUBLE_EQ(0.0, conditional_entropy(delta, delta));
+
+    auto const unfair_coin = distribution{2,1};
+    ASSERT_DOUBLE_EQ(0.0, conditional_entropy(unfair_coin, unfair_coin));
+}
+
+TEST(ConditionalEntropy, Uniform)
+{
+    using namespace inform;
+
+    distribution const joint     = {50,32,18,0,28,12,31,29,12,30,30,28,17,18,21,44};
+    distribution const condition = {1,1,1,1};
+    ASSERT_NEAR(1.797915, conditional_entropy(joint, condition), 1e-6);
+}
+
+TEST(ConditionalEntropy, NonUniform)
+{
+    using namespace inform;
+
+    distribution const joint     = {100,64,36,0,28,12,31,29,12,30,30,28,17,18,21,44};
+    distribution const condition = {2,1,1,1};
+    ASSERT_NEAR(1.732600, conditional_entropy(joint, condition), 1e-6);
+}
