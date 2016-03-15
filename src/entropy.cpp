@@ -48,4 +48,23 @@ namespace inform
         }
         return std::log2(h) / (1 - order);
     }
+
+    auto tsallis_entropy(distribution const& pdf, double index) -> double
+    {
+        if(!pdf.is_valid())
+        {
+            auto msg = "inform::tsallis_entropy: provided distribution is invalid";
+            throw std::invalid_argument(msg);
+        }
+        if (index == 1.0)
+        {
+            return shannon_entropy(pdf);
+        }
+        auto h = 1.0;
+        for (auto const& p : pdf)
+        {
+            h -= std::pow(p, index);
+        }
+        return h / (index - 1);
+    }
 }
