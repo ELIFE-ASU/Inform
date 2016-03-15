@@ -24,4 +24,28 @@ namespace inform
         }
         return h;
     }
+
+    auto renyi_entropy(distribution const& pdf, double order) -> double
+    {
+        if (!pdf.is_valid())
+        {
+            auto msg = "inform::renyi_entropy: provided distribution is invalid";
+            throw std::invalid_argument(msg);
+        }
+        if (order < 0.0)
+        {
+            auto msg = "inform::renyi_entropy: order must be positive";
+            throw std::invalid_argument(msg);
+        }
+        else if (order == 1.0)
+        {
+            return shannon_entropy(pdf);
+        }
+        auto h = 0.0;
+        for (auto const& p : pdf)
+        {
+            h += std::pow(p, order);
+        }
+        return std::log2(h) / (1 - order);
+    }
 }
