@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <iterator>
 #include <numeric>
+#include <stdexcept>
 #include <vector>
 
 namespace inform
