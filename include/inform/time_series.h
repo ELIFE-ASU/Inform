@@ -93,3 +93,9 @@ namespace inform
         return mutual_information(states, histories, futures);
     }
 }
+
+extern "C"
+{
+    double inform_active_info(int64_t const*, size_t, uint64_t);
+    double inform_active_info_ensemble(int64_t const*, size_t, size_t, uint64_t);
+}

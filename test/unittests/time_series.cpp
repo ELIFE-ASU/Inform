@@ -81,3 +81,61 @@ TEST(ActiveInformation, EnsembleSeries)
     };
     ASSERT_NEAR(0.3080467, inform::active_information(begin(series), end(series), 9, 2), 1e-6);
 }
+
+TEST(ActiveInformation_C, SingleSeries)
+{
+    using namespace std;
+    auto series = vector<int64_t>{1,1,0,0,1,0,0,1};
+    EXPECT_NEAR(0.918296, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    /// WORK THESE OUT BY HAND
+    series = {1,0,0,0,0,0,0,0,0};
+    EXPECT_NEAR(0.0, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {0,0,1,1,1,1,0,0,0};
+    EXPECT_NEAR(0.305958, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {1,0,0,0,0,0,0,1,1};
+    EXPECT_NEAR(0.347458, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {1,0,0,0,0,0,0,1,1};
+    EXPECT_NEAR(0.347458, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {0,0,0,0,0,1,1,0,0};
+    EXPECT_NEAR(0.399533, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {0,0,0,0,1,1,0,0,0};
+    EXPECT_NEAR(0.399533, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {1,1,1,0,0,0,0,1,1};
+    EXPECT_NEAR(0.305958, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {0,0,0,1,1,1,1,0,0};
+    EXPECT_NEAR(0.305958, inform_active_info(series.data(), series.size(), 2), 1e-6);
+
+    series = {0,0,0,0,0,0,1,1,0};
+    EXPECT_NEAR(0.347458, inform_active_info(series.data(), series.size(), 2), 1e-6);
+}
+
+TEST(ActiveInformation_C, EnsembleSeries)
+{
+    using namespace std;
+    auto series = vector<int64_t>{
+        1,1,0,0,1,0,0,1,
+        0,0,0,1,0,0,0,1,
+    };
+    ASSERT_NEAR(0.459148, inform_active_info_ensemble(series.data(), series.size(), 8, 2), 1e-6);
+
+    series = {
+        1,0,0,0,0,0,0,0,0,
+        0,0,1,1,1,1,0,0,0,
+        1,0,0,0,0,0,0,1,1,
+        1,0,0,0,0,0,0,1,1,
+        0,0,0,0,0,1,1,0,0,
+        0,0,0,0,1,1,0,0,0,
+        1,1,1,0,0,0,0,1,1,
+        0,0,0,1,1,1,1,0,0,
+        0,0,0,0,0,0,1,1,0,
+    };
+    ASSERT_NEAR(0.3080467, inform_active_info_ensemble(series.data(), series.size(), 9, 2), 1e-6);
+}
