@@ -4,6 +4,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <type_traits>
 #include <vector>
 
@@ -72,7 +73,7 @@ namespace inform
     }
 
     template <>
-    auto decode_state<std::vector<bool>>(uint64_t encoding, uint64_t length) -> std::vector<bool>
+    inline auto decode_state<std::vector<bool>>(uint64_t encoding, uint64_t length) -> std::vector<bool>
     {
         std::vector<bool> xs;
         xs.reserve(length);
