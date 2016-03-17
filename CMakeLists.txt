@@ -8,3 +8,5 @@ add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
 
 enable_testing()
 add_subdirectory(test)
+
+add_subdirectory(examples)

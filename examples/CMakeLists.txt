@@ -1,0 +1,1 @@
+add_subdirectory(fission_yeast)
