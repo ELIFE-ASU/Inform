@@ -20,7 +20,7 @@ auto main() -> int
 
     // Read the network from the nodes and edges files
     auto net = network("examples/assets/fission-yeast-nodes.txt", "examples/assets/fission-yeast-edges.txt");
-    if (net.node_states() != N)
+    if (net.node_states().size() != N)
     {
         throw std::runtime_error("main: the network as read does not have the expected number of nodes");
     }
