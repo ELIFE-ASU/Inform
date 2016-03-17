@@ -5,7 +5,6 @@
 
 #include <inform/distribution.h>
 
-
 namespace inform
 {
     auto shannon_entropy(distribution const& pdf) -> double;
