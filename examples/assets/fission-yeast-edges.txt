@@ -1,0 +1,31 @@
+#interaction: 1 = activation, -1 = inhibition 
+#node	node	interaction
+#StartNode	SK	1
+SK	Ste9	-1
+SK	Rum1	-1
+Cdc2_Cdc13	Cdc25	1
+Wee1_Mik1	Cdc2_Cdc13_active	-1
+Rum1	Cdc2_Cdc13	-1
+Rum1	Cdc2_Cdc13_active	-1
+Cdc2_Cdc13	Rum1	-1
+Ste9	Cdc2_Cdc13	-1
+Ste9	Cdc2_Cdc13_active	-1
+Cdc2_Cdc13_active	Slp1	1
+Slp1	Cdc2_Cdc13	-1
+Slp1	Cdc2_Cdc13_active	-1
+Slp1	PP	1
+PP 	Ste9	1
+PP 	Rum1	1
+PP 	Wee1_Mik1	1
+Cdc25	Cdc2_Cdc13_active	1
+Cdc2_Cdc13	Ste9	-1
+PP	Cdc25	-1
+Cdc2_Cdc13	Wee1_Mik1	-1
+Cdc2_Cdc13_active	Rum1	-1
+Cdc2_Cdc13_active	Ste9	-1
+#self-degradation 
+#node	onde	interaction
+#StartNode	StartNode	-1
+SK	SK	-1
+PP	PP	-1
+Slp1	Slp1	-1

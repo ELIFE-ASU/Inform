@@ -1,0 +1,10 @@
+#Node	#Threshold
+SK	0
+Cdc2_Cdc13	-0.5
+Ste9	0
+Rum1	0
+Slp1	0
+Cdc2_Cdc13_active	0.5
+Wee1_Mik1	0
+Cdc25	0
+PP	0

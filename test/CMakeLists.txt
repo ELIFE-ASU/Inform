@@ -1,0 +1,16 @@
+add_subdirectory(googletest)
+add_subdirectory(unittests)
+
+add_executable(${PROJECT_NAME}_unittest ${${PROJECT_NAME}_unittest_SOURCES})
+target_link_libraries(${PROJECT_NAME}_unittest gtest gtest_main)
+target_link_libraries(${PROJECT_NAME}_unittest ${PROJECT_NAME})
+
+foreach(unittest_SOURCE ${${PROJECT_NAME}_unittest_SOURCES})
+    file(STRINGS ${unittest_SOURCE} TEST_NAMES REGEX ^TEST)
+    foreach(TEST_NAME ${TEST_NAMES})
+        string(REGEX REPLACE ["\) \(,"] ";" TEST_NAME ${TEST_NAME})
+        list(GET TEST_NAME 1 TEST_GROUP_NAME)
+        list(GET TEST_NAME 3 TEST_NAME)
+        add_test(${PROJECT_NAME}.${TEST_GROUP_NAME}.${TEST_NAME} ${PROJECT_NAME}_unittest --gtest_filter=${TEST_GROUP_NAME}.${TEST_NAME})
+    endforeach()
+endforeach()
