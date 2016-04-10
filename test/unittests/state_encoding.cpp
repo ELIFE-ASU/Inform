@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 #include <gtest/gtest.h>
 
+#include <functional>
 #include <inform/state_encoding.h>
 
 TEST(EncodeState, EmptyState)
