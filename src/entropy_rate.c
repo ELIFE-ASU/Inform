@@ -9,7 +9,7 @@ static void accumulate_observations(int const* series, size_t n, size_t m,
 {
     for (size_t i = 0; i < n; ++i, series += m)
     {
-        int history = 0, q = 1, state, future;
+        uint64_t history = 0, q = 1, state, future;
         for (size_t j = 0; j < k; ++j)
         {
             q *= b;
@@ -31,11 +31,11 @@ static void accumulate_observations(int const* series, size_t n, size_t m,
 
 static void accumulate_local_observations(int const* series, size_t n, size_t m,
     int b, size_t k, inform_dist *states, inform_dist *histories,
-    int *state, int *history)
+    uint64_t *state, uint64_t *history)
 {
     for (size_t i = 0; i < n; ++i)
     {
-        int q = 1;
+        uint64_t q = 1;
         history[0] = 0;
         for (size_t j = 0; j < k; ++j)
         {
@@ -163,15 +163,15 @@ double *inform_local_entropy_rate(int const *series, size_t n, size_t m, int b,
     inform_dist histories = { histogram_data + states_size, histories_size, N };
 
 
-    int *state_data = malloc(2 * N * sizeof(uint64_t));
+    uint64_t *state_data = malloc(2 * N * sizeof(uint64_t));
     if (state_data == NULL)
     {
         if (allocate_er) free(er);
         free(histogram_data);
         INFORM_ERROR_RETURN(err, INFORM_ENOMEM, NULL);
     }
-    int *state = state_data;
-    int *history = state + N;
+    uint64_t *state = state_data;
+    uint64_t *history = state + N;
 
     accumulate_local_observations(series, n, m, b, k, &states, &histories,
         state, history);
