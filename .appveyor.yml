@@ -5,7 +5,6 @@ configuration:
 platform:
 - x64
 - x86
-- Any CPU
 before_build:
 - ps: |
     if ($env:PLATFORM -eq 'x64') {
