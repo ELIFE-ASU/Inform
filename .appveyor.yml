@@ -17,10 +17,18 @@ build:
     verbosity: normal
 test_script:
     - cmd: test\%CONFIGURATION%\inform_unittest.exe
+    - ps: dist\package.ps1
 artifacts:
-    - path: 'Release\inform.dll'
-      name: dll
-    - path: 'Release\inform.lib'
-      name: lib
-    - path: 'Release\inform_static.lib'
-      name: static
+    - path: 'dist\*.zip'
+      name: package
+deploy:
+    description: 'New Release'
+    provider: GitHub
+    auth_token:
+        secure: %GITHUB_TOKEN%
+    artifact: dist\*.zip
+    draft: true
+    prerelease: true
+    on:
+        branch: master
+        APPVEYOR_REPO_TAG: true
