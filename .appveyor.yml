@@ -25,7 +25,7 @@ deploy:
     description: 'New Release'
     provider: GitHub
     auth_token:
-        secure: %GITHUB_TOKEN%
+        secure: $(GITHUB_TOKEN)
     artifact: dist\*.zip
     draft: true
     prerelease: true
