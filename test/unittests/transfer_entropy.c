@@ -317,6 +317,35 @@ UNIT(CompleteTransferEntropy)
             inform_transfer_entropy(xseries, yseries, back, 2, 1, 9, 2, 2, NULL),
             1e-6);
     }
+    {
+        int xseries[6] = {0, 0, 0, 1, 1, 0};
+        int yseries[6] = {0, 1, 1, 0, 1, 1};
+        int back[6]    = {0, 0, 0, 1, 0, 1};
+        ASSERT_DBL_NEAR_TOL(0.666667,
+            inform_transfer_entropy(yseries, xseries, back, 1, 3, 2, 2, 1, NULL),
+            1e-6);
+        ASSERT_DBL_NEAR_TOL(0.666667,
+            inform_transfer_entropy(xseries, yseries, back, 1, 3, 2, 2, 1, NULL),
+            1e-6);
+    }
+    {
+        int const xseries[9] = {0,1,1,1,1,0,0,0,0};
+        int const yseries[9] = {0,0,1,1,1,1,0,0,0};
+        int const *back = xseries;
+        ASSERT_DBL_NEAR_TOL(0.000000,
+            inform_transfer_entropy(xseries, yseries, back, 1, 1, 9, 2, 2, NULL),
+            1e-6);
+    }
+    {
+        int const xseries[18] = {1,0,0,0,0,1,1,1,1,
+                                 1,1,1,1,0,0,0,1,1};
+        int const yseries[18] = {0,0,1,1,1,1,0,0,0,
+                                 1,0,0,0,0,1,1,1,0};
+        int const *back = xseries;
+        ASSERT_DBL_NEAR_TOL(0.000000,
+            inform_transfer_entropy(xseries, yseries, back, 1, 2, 9, 2, 2, NULL),
+            1e-6);
+    }
 }
 
 UNIT(LocalTransferEntropyNULLSeries)
