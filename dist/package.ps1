@@ -6,7 +6,8 @@ $target = "dist/$prefix"
 $archive = "$($target)_win-amd64.zip"
 
 Copy-Item LICENSE $target
-Copy-Item README.md $target
+Copy-Item README.adoc $target
+Copy-Item CHANGELOG.md $target
 Copy-Item -Recurse include $target
 New-Item -Type Directory $target/lib
 Copy-Item inform.dll $target/lib

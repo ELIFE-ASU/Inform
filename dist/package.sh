@@ -11,7 +11,8 @@ make -C build/production all test
 make -C build/production install > /dev/null
 cp dist/install.sh $prefix > /dev/null
 cp LICENSE $prefix > /dev/null
-cp README.md $prefix > /dev/null
+cp README.adoc $prefix > /dev/null
+cp CHANGELOG.md $prefix > /dev/null
 
 system=`uname -s`
 hardware=`uname -m`
