@@ -1,6 +1,6 @@
 = Inform: A C library for information analysis of complex systems
 Douglas G. Moore <douglas.g.moore@asu.edu>
-v1.0.0, March 2018
+v1.0.1, November 2019
 :toc2:
 :toclevels: 2
 :source-highlighter: prettify

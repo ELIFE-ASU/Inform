@@ -1,26 +1,26 @@
-version: 1.0.0.{build}
+version: 1.0.1.{build}
 configuration:
-- Debug
-- Release
+    - Debug
+    - Release
 platform:
-- x64
-- x86
+    - x64
+    - x86
 before_build:
-- ps: |
-    if ($env:PLATFORM -eq 'x64') {
-        cmake . -G "Visual Studio 14 2015 Win64" -DEXAMPLES=Yes
-    } else {
-        cmake . -G "Visual Studio 14 2015" -DEXAMPLES=Yes
-    }
+    - ps: |
+        if ($env:PLATFORM -eq 'x64') {
+            cmake . -G "Visual Studio 14 2015 Win64" -DEXAMPLES=Yes
+        } else {
+            cmake . -G "Visual Studio 14 2015" -DEXAMPLES=Yes
+        }
 build:
-  project: ALL_BUILD.vcxproj
-  verbosity: normal
+    project: ALL_BUILD.vcxproj
+    verbosity: normal
 test_script:
-- cmd: test\%CONFIGURATION%\inform_unittest.exe
+    - cmd: test\%CONFIGURATION%\inform_unittest.exe
 artifacts:
-- path: 'Release\inform.dll'
-  name: dll
-- path: 'Release\inform.lib'
-  name: lib
-- path: 'Release\inform_static.lib'
-  name: static
+    - path: 'Release\inform.dll'
+      name: dll
+    - path: 'Release\inform.lib'
+      name: lib
+    - path: 'Release\inform_static.lib'
+      name: static
